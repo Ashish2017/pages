@@ -19,8 +19,11 @@ spec:
         app: pages
         servicefor: pages
     spec:
+      volumes:
+      - name: log-volume
+        emptyDir: {}
       containers:
-        - image: senappaa/pages:pipeline
+        - image: senappaa/pages:logging
           imagePullPolicy: Always
           env:
             - name: PAGE_CONTENT
@@ -31,5 +34,21 @@ spec:
           name: pages
           ports:
             - containerPort: 8080
+          volumeMounts:
+          - name: log-volume
+            mountPath: "/var/tmp/"
+          readinessProbe:
+              tcpSocket:
+                port: 8080
+              initialDelaySeconds: 150
+              periodSeconds: 5
+              successThreshold: 2
+          livenessProbe:
+              httpGet:
+                path: /actuator/health
+                port: 8080
+              initialDelaySeconds: 150
+              periodSeconds: 5
+              successThreshold: 1
           resources: {}
 status: {}
