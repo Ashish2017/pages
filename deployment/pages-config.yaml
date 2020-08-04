@@ -4,4 +4,4 @@ metadata:
   name: pages-config-map
   namespace: ashish
 data:
-  PAGE_CONTENT: "Pages coming from Yellow-world!"
+  PAGE_CONTENT: "white Pages coming from Yellow-world!"
