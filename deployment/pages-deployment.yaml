@@ -20,23 +20,16 @@ spec:
         servicefor: pages
     spec:
       containers:
-      - image: senappaa/pages:1.0
-        imagePullPolicy: Always
-        name: pages
-        ports:
-          - containerPort: 8080
-        resources: {}
         - image: senappaa/pages:config
           imagePullPolicy: Always
           env:
-          - name: PAGE_CONTENT
-            valueFrom:
-               configMapKeyRef:
-                 name: pages-config-map
-                 key: PAGE_CONTENT
+            - name: PAGE_CONTENT
+              valueFrom:
+                configMapKeyRef:
+                  name: pages-config-map
+                  key: PAGE_CONTENT
           name: pages
           ports:
             - containerPort: 8080
           resources: {}
->>>>>>> config-work
 status: {}
