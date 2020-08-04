@@ -20,7 +20,7 @@ spec:
         servicefor: pages
     spec:
       containers:
-        - image: senappaa/pages:config
+        - image: senappaa/pages:pipeline
           imagePullPolicy: Always
           env:
             - name: PAGE_CONTENT
