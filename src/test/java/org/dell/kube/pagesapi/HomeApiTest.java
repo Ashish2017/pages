@@ -31,8 +31,5 @@ public class HomeApiTest {
         String body = this.restTemplate.getForObject("/actuator/health", String.class);
         assertThat(body).contains("UP");
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> docker-work
+
