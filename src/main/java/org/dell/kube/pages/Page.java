@@ -1,7 +1,6 @@
 package org.dell.kube.pages;
 
 public class Page {
-
     private Long id;
     private String businessName;
     private Long categoryId;

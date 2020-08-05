@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pages-config-map
+  namespace: ashish
+data:
+  PAGE_CONTENT: "Pages coming from Yellow-world!"
