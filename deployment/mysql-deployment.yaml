@@ -22,9 +22,9 @@ spec:
             # Instead of using value directly we could also use secrets
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-                  secretKeyRef:
-                    name: mysql-secret
-                    key: mysql-pass
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-pass
           ports:
             - containerPort: 3306
               name: mysql
@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-    namespace: ashish
+  namespace: ashish
 spec:
   ports:
     - port: 3306
