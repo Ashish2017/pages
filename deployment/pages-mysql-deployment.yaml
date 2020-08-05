@@ -41,7 +41,7 @@ spec:
         volumeMounts:
           - name: mysql-storage
             mountPath: "/var/lib/mysql-ashish"
-      - image: senappa/pages:persist
+      - image: senappaa/pages:persist
         imagePullPolicy: Always
         name: pages
         ports:
