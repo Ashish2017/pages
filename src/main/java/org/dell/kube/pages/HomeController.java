@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class HomeController {
-
     Logger logger = LoggerFactory.getLogger(HomeController.class);
     private String pageContent;
 
     public HomeController(@Value("${page.content}") String pageContent){
         this.pageContent=pageContent;
-
     }
     @GetMapping
     public String getPage(){

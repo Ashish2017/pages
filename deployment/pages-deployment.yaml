@@ -23,7 +23,7 @@ spec:
       - name: log-volume
         emptyDir: {}
       containers:
-        - image: senappaa/pages:logging
+        - image: senappaa/pages:repo
           imagePullPolicy: Always
           env:
             - name: PAGE_CONTENT
