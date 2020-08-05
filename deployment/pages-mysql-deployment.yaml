@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pages
+    servicefor: pages
+  name: pages
+  namespace: ashish
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pages
+      servicefor: pages
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: pages
+        servicefor: pages
+    spec:
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+              claimName: mysql-volume-claim-ashish
+        - name: log-volume
+          emptyDir: {}
+      containers:
+      - image: mysql:8.0
+        name: mysql
+        env:
+            # Instead of using value directly we could also use secrets
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+              secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-pass
+        ports:
+          - containerPort: 3306
+            name: mysql
+        volumeMounts:
+          - name: mysql-storage
+            mountPath: "/var/lib/mysql-ashish"
+      - image: senappa/pages:persist
+        imagePullPolicy: Always
+        name: pages
+        ports:
+          - containerPort: 8080
+        env:
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: password
+          - name: SPRING_DATASOURCE_USER
+            value: root
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:mysql://localhost:3306/pages?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&user=root"
+          - name: PAGE_CONTENT
+            valueFrom:
+              configMapKeyRef:
+                name: pages-config-map
+                key: PAGE_CONTENT
+        volumeMounts:
+          - name: log-volume
+            mountPath: "/var/tmp/"
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          successThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          successThreshold: 1
+        resources: {}
