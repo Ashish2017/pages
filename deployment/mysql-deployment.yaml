@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-    namespace: ashish
+  namespace: ashish
 spec:
   replicas: 1
   selector:
@@ -21,7 +21,7 @@ spec:
           env:
             # Instead of using value directly we could also use secrets
             - name: MYSQL_ROOT_PASSWORD
-                valueFrom:
+              valueFrom:
                   secretKeyRef:
                     name: mysql-secret
                     key: mysql-pass
